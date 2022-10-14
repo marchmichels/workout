@@ -101,27 +101,64 @@ $app->get('/users/{id}', function (Request $request, Response $response, array $
 
 //get all reviews for a product
 $app->get('/products/{id}/reviews', function (Request $request, Response $response, array $args) {
-    //implement method here
+    $id = $args['id'];
+    $product = new Product();
+    $reviews = $product->find($id)->reviews;
+
+    $payload = [];
+
+    foreach ($reviews as $review) {
+        $payload[$review->review_id] = [
+            'rating' => $review->rating,
+            'comment' => $review->comment,
+            'user_id' => $review->user_id,
+            'product_id' => $review->product_id
+        ];
+    }
+    return $response->withStatus(200)->withJson($payload);
 });
 
 //get a single review
 $app->get('/reviews/{id}', function (Request $request, Response $response, array $args) {
-    //implement method here
+    $id = $args['id'];
+    $review = new Review();
+    $review = $review->find($id);
+
+    $payload[$review->review_id] = [
+        'rating' => $review->rating,
+        'comment' => $review->comment,
+        'user_id' => $review->user_id,
+        'product_id' => $review->product_id
+    ];
+    return $response->withStatus(200)->withJson($payload);
 });
 
 //get all orders
 $app->get('/orders', function (Request $request, Response $response, array $args) {
-    //implement method here
+    $orders = Order::all();
+
+    $payload = [];
+
+    foreach ($orders as $_order) {
+        $payload[$_order->order_id] = ['product_id' => $_order->product_id,
+            'user_id' => $_order->user_id
+        ];
+    }
+    return $response->withStatus(200)->withJson($payload);
 });
 
 //get a single order
 $app->get('/orders/{id}', function (Request $request, Response $response, array $args) {
-    //implement method here
+    $id = $args['id'];
+    $order = new Order();
+    $order = $order->find($id);
+
+    $payload[$order->order_id] = [
+        'product_id' => $order->product_id,
+        'user_id' => $order->user_id
+    ];
+    return $response->withStatus(200)->withJson($payload);
 });
-
-
-
-
 
 
 
