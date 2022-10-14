@@ -152,10 +152,25 @@ $app->get('/orders/{id}', function (Request $request, Response $response, array 
     $id = $args['id'];
     $order = new Order();
     $order = $order->find($id);
+    $product_id = $order->product_id;
+    $product = new Product;
+    $_pro = $product->find($product_id);
+    $user_id = $order->user_id;
+    $user = new User();
+    $_usr = $user->find($user_id);
+
+
 
     $payload[$order->order_id] = [
         'product_id' => $order->product_id,
-        'user_id' => $order->user_id
+        'product_name' => $_pro->product_name,
+        'user_id' => $order->user_id,
+        'first_name' => $_usr->first_name,
+        'last_name' => $_usr->last_name,
+        'street_address' => $_usr->street_address,
+        'city' => $_usr->city,
+        'state' => $_usr->state,
+        'zipcode' => $_usr->zipcode,
     ];
     return $response->withStatus(200)->withJson($payload);
 });
