@@ -41,7 +41,7 @@ $app->get('/products', function (Request $request, Response $response, array $ar
 
 
 
-//get a single product
+//get one products by ID
 $app->get('/products/{id}', function (Request $request, Response $response, array $args) {
     $id = $args['id'];
 
@@ -79,7 +79,7 @@ $app->get('/users', function (Request $request, Response $response, array $args)
 });
 
 
-//get a single user
+//get a single user by ID
 $app->get('/users/{id}', function (Request $request, Response $response, array $args) {
     $id = $args['id'];
 
@@ -135,17 +135,39 @@ $app->get('/reviews/{id}', function (Request $request, Response $response, array
 
 //get all orders
 $app->get('/orders', function (Request $request, Response $response, array $args) {
+
+
     $orders = Order::all();
 
     $payload = [];
 
     foreach ($orders as $_order) {
-        $payload[$_order->order_id] = ['product_id' => $_order->product_id,
-            'user_id' => $_order->user_id
+        $product_id = $_order->product_id;
+        $product = new Product();
+        $_pro = $product->find($product_id);
+        $user_id = $_order->user_id;
+        $user = new User();
+        $_usr = $user->find($user_id);
+
+        $payload[$_order->order_id] = [
+            'product_id' => $_order->product_id,
+            'product_name' => $_pro->product_name,
+            'user_id' => $_order->user_id,
+            'first_name' => $_usr->first_name,
+            'last_name' => $_usr->last_name,
+            'street_address' => $_usr->street_address,
+            'city' => $_usr->city,
+            'state' => $_usr->state,
+            'zipcode' => $_usr->zipcode,
         ];
+
     }
+
     return $response->withStatus(200)->withJson($payload);
+
+
 });
+
 
 //get a single order
 $app->get('/orders/{id}', function (Request $request, Response $response, array $args) {
@@ -175,6 +197,31 @@ $app->get('/orders/{id}', function (Request $request, Response $response, array 
     return $response->withStatus(200)->withJson($payload);
 });
 
+//get all categories
+$app->get('/categories', function (Request $request, Response $response, array $args) {
+    $categories = Category::all()->unique('category_name');
+    $payload = [];
+    foreach ($categories as $category) {
+        $payload[$category->category_id] = ['category_name' => $category->category_name,
+            'product_id' => $category->product_id
+        ];
+    }
+    return $response->withStatus(200)->withJson($payload);
+
+});
+
+//get one category by ID
+$app->get('/categories/{id}', function (Request $request, Response $response, array $args) {
+    $id = $args['id'];
+    $category = new Category();
+    $category = $category->find($id);
+
+    $payload[$category->category_id] = [
+        'category_name' => $category->category_name,
+        'product_id' => $category->product_id
+    ];
+    return $response->withStatus(200)->withJson($payload);
+});
 
 
 
