@@ -23,6 +23,7 @@ $app->get('/', function ($request, $response, $args) {
 
 
 //get all products
+//TODO: Implement search of products (Resource B)
 $app->get('/products', function (Request $request, Response $response, array $args) {
 
     $products = Product::all();
@@ -41,7 +42,7 @@ $app->get('/products', function (Request $request, Response $response, array $ar
 
 
 
-//get one products by ID
+//get one product by ID
 $app->get('/products/{id}', function (Request $request, Response $response, array $args) {
     $id = $args['id'];
 
@@ -58,6 +59,7 @@ $app->get('/products/{id}', function (Request $request, Response $response, arra
 
 
 //get all users
+//TODO: Implement pagination and sort of users (Resource A)
 $app->get('/users', function (Request $request, Response $response, array $args) {
 
     $users = User::all();
@@ -131,6 +133,21 @@ $app->get('/reviews/{id}', function (Request $request, Response $response, array
         'product_id' => $review->product_id
     ];
     return $response->withStatus(200)->withJson($payload);
+});
+
+//create a review
+$app->post('/products/{id}/reviews', function ($request, $response, $args) {
+    //TODO: Implement create a review (Resource C)
+});
+
+//update a review
+$app->patch('/products/{id}/reviews/{id}', function ($request, $response, $args) {
+    //TODO: Implement update a review (Resource C)
+});
+
+//delete a review
+$app->delete('/products/{id}/reviews/{id}', function ($request, $response, $args) {
+    //TODO: Implement delete a review (Resource C)
 });
 
 //get all orders
