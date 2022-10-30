@@ -23,23 +23,39 @@ $app->get('/', function ($request, $response, $args) {
 
 
 //get all products
-//TODO: Implement search of products (Resource B)
+//supports search of products (Resource B)
 $app->get('/products', function (Request $request, Response $response, array $args) {
 
-    $products = Product::all();
+    //Get querystring variable from url
+    $params = $request->getQueryParams();
 
-    $payload = [];
+    //Get search terms
+    $term = array_key_exists('q', $params) ? $params['q'] : null;
 
-    foreach ($products as $_pro) {
-        $payload[$_pro->product_id] = ['product_name' => $_pro->product_name,
-            'description' => $_pro->description
-        ];
+
+    if (!is_null($term)) {
+        $products = Product::searchProducts($term);
+        $payload_final = [];
+        foreach ($products as $_pro) {
+            $payload_final[$_pro->product_id] = ['product_name' => $_pro->product_name,
+                'description' => $_pro->description
+            ];
+        }
+    } else {
+        $products = Product::all();
+
+        $payload_final = [];
+
+        foreach ($products as $_pro) {
+            $payload_final[$_pro->product_id] = ['product_name' => $_pro->product_name,
+                'description' => $_pro->description
+            ];
+        }
     }
-    return $response->withStatus(200)->withJson($payload);
+
+    return $response->withStatus(200)->withJson($payload_final);
 
 });
-
-
 
 
 //get one product by ID
@@ -59,24 +75,55 @@ $app->get('/products/{id}', function (Request $request, Response $response, arra
 
 
 //get all users
-//TODO: Implement pagination and sort of users (Resource A)
+//supports pagination and sort of users (Resource A)
 $app->get('/users', function (Request $request, Response $response, array $args) {
 
-    $users = User::all();
+    //get total number of users
+    $count = User::count();
+
+    //get querystring from url
+    $params = $request->getQueryParams();
+
+    //limit and offset exist
+    $limit = array_key_exists('limit',$params) ? (int)$params['limit'] : 10; //users displayed on page
+    $offset = array_key_exists('offset', $params) ? (int)$params['offset'] : 0; // offset the first user
+
+    //pagination
+    $links = User::getLinks($request,$limit,$offset);
+    //sorting
+    $sort_key_array = User::getSortKeys($request);
+    $query = User::with('orders');
+
+    $query = $query->skip($offset)->take($limit); //limits row
+
+    //Sort output into one or more columns
+    foreach ($sort_key_array as $column => $direction) {
+        $query->orderby($column, $direction);
+    }
+
+    $users = $query->get();
 
     $payload = [];
-
-    foreach ($users as $_usr) {
+    foreach ($users as $_usr){
         $payload[$_usr->user_id] = ['first_name' => $_usr->first_name,
             'last_name' => $_usr->last_name,
             'street_address' => $_usr->street_address,
             'city' => $_usr->city,
             'state' => $_usr->state,
             'zipcode' => $_usr->zipcode,
-
         ];
     }
-    return $response->withStatus(200)->withJson($payload);
+
+    $payload_final = [
+        'totalCount' => $count,
+        'limit' => $limit,
+        'offset' => $offset,
+        'links' => $links,
+        'sort' => $sort_key_array,
+        'data' =>$payload
+    ];
+
+    return $response->withStatus(200)->withJson($payload_final);
 
 });
 
@@ -135,19 +182,70 @@ $app->get('/reviews/{id}', function (Request $request, Response $response, array
     return $response->withStatus(200)->withJson($payload);
 });
 
-//create a review
-$app->post('/products/{id}/reviews', function ($request, $response, $args) {
-    //TODO: Implement create a review (Resource C)
+//create a review (resource C)
+$app->post('/reviews', function ($request, $response, $args) {
+
+    $review = new Review();
+    $_rating = $request->getParam('rating');
+    $_comment = $request->getParam('comment');
+    $_user_id = $request->getParam('user_id');
+    $_product_id = $request->getParam('product_id');
+
+    $review->comment = $_comment;
+    $review->user_id = $_user_id;
+    $review->product_id = $_product_id;
+    $review->rating = $_rating;
+    $review->save();
+
+    $payload = (['review_id'=> $review->review_id,
+        'rating' => $review->rating,
+        'comment' => $review->comment,
+        'user_id' => $review->user_id,
+        'product_id' => $review->product_id
+        ]);
+
+    return $response->withStatus(201)->withJson($payload);
+
+
+
+
 });
 
-//update a review
-$app->patch('/products/{id}/reviews/{id}', function ($request, $response, $args) {
-    //TODO: Implement update a review (Resource C)
+//update a review (resource C)
+$app->patch('/reviews/{id}', function ($request, $response, $args) {
+
+    $id = $args['id'];
+    $review = Review::findOrFail($id);
+    $params = $request->getParsedBody();
+    foreach ($params as $field => $value) {
+        $review->$field = $value;
+    }
+    $review->save();
+    if ($review->review_id) {
+        $payload = ['review_id' => $review->review_id,
+            'rating' => $review->rating,
+            'comment' => $review->comment,
+            'user_id' => $review->user_id,
+            'product_id' => $review->product_id
+        ];
+        return $response->withStatus(200)->withJson($payload);
+    } else {
+        return $response->withStatus(500);
+    }
+
 });
 
-//delete a review
-$app->delete('/products/{id}/reviews/{id}', function ($request, $response, $args) {
-    //TODO: Implement delete a review (Resource C)
+//delete a review (resource C)
+$app->delete('/reviews/{id}', function ($request, $response, $args) {
+    $id = $args['id'];
+    $review = Review::find($id);
+    $review->delete();
+    if ($review->exists) {
+        return $response->withStatus(500);
+    } else {
+        return $response->withStatus(204)->getBody()->write("Review'/reviews/$id' has been deleted.");
+    }
+
 });
 
 //get all orders
@@ -182,9 +280,7 @@ $app->get('/orders', function (Request $request, Response $response, array $args
 
     return $response->withStatus(200)->withJson($payload);
 
-
 });
-
 
 //get a single order
 $app->get('/orders/{id}', function (Request $request, Response $response, array $args) {
@@ -197,8 +293,6 @@ $app->get('/orders/{id}', function (Request $request, Response $response, array 
     $user_id = $order->user_id;
     $user = new User();
     $_usr = $user->find($user_id);
-
-
 
     $payload[$order->order_id] = [
         'product_id' => $order->product_id,
@@ -240,10 +334,5 @@ $app->get('/categories/{id}', function (Request $request, Response $response, ar
     return $response->withStatus(200)->withJson($payload);
 });
 
-
-
-
 $app->run();
-
-
 
