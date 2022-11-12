@@ -90,6 +90,18 @@ class UserController {
     }
 
 
+    //update
+    public function update(Request $request, Response $response, array $args) {
+        $user = User::updateUser($request);
+        $results = [
+            'status' => 'user updated',
+            'data' => $user
+        ];
+        return $response->withJson($results, 200, JSON_PRETTY_PRINT);
+
+    }
+
+
 
 
 }

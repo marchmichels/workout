@@ -11,6 +11,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 class ProductController {
 
 
+    //get all products
     public function index(Request $request, Response $response, array $args) {
 
 
@@ -63,6 +64,29 @@ class ProductController {
         return $response->withStatus(200)->withJson($payload);
 
     }
+
+
+    //get all reviews for a product
+    //view reviews
+    public function viewReviews(Request $request, Response $response, array $args) {
+        $id = $args['id'];
+        $product = new Product();
+        $reviews = $product->find($id)->reviews;
+
+        $payload = [];
+
+        foreach ($reviews as $review) {
+            $payload[$review->review_id] = [
+                'rating' => $review->rating,
+                'comment' => $review->comment,
+                'user_id' => $review->user_id,
+                'product_id' => $review->product_id
+            ];
+        }
+        return $response->withStatus(200)->withJson($payload);
+    }
+
+
 
 
 
