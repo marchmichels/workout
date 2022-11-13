@@ -4,11 +4,19 @@
 namespace Workout\Models;
 
 use \Illuminate\Database\Eloquent\Model;
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 class User extends Model
 {
+
+    const JWT_KEY = 'my token';//it can be any token that users like
+    const JWT_EXPIRE = 600;//experiation period in seconds
+
     protected $table = 'users';
     protected $primaryKey = 'user_id';
+    public $timestamps = false;
+
 
     public function reviews()
     {
@@ -64,5 +72,37 @@ class User extends Model
         return $sort_key_array;
 
     }
+
+    // Update a user
+    public static function updateUser($request)
+    {
+        // Retrieve parameters from request body
+        $params = $request->getParsedBody();
+
+        //Retrieve the user's id from url and then the user from the database
+        $id = $request->getAttribute('id');
+        $user = self::findOrFail($id);
+
+        // update user
+        $user->username = $params['username'];
+        $user->password = password_hash($params['password'], PASSWORD_DEFAULT);
+        $user->first_name = $params['first_name'];
+        $user->last_name = $params['last_name'];
+        $user->street_address = $params['street_address'];
+        $user->city = $params['city'];
+        $user->state = $params['state'];
+        $user->zipcode = $params['zipcode'];
+
+
+        // save user update
+        $user->save();
+        return $user;
+    }
+
+
+
+
+
+
 
 }
