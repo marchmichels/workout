@@ -1,0 +1,82 @@
+/*
+*  styles for post-related elements
+ */
+
+
+.post-id{
+    width: 130px
+}
+
+.post-body {
+    width: 400px
+}
+
+.post-image {
+    width: 100px
+}
+
+.post-create {
+    width: 150px
+}
+
+.post-update {
+    width: 150px
+}
+
+
+.post-detail {
+    margin: 20px 0px;
+    display: flex;
+    flex-direction: column;
+}
+
+.post-detail-row {
+    border-top: #b7d2ff solid 1px;
+    border-bottom: #b7d2ff solid 1px;
+    margin-bottom: -1px;
+    display: flex;
+    flex-direction: row;
+}
+
+.post-detail-label {
+    padding: 3px 10px;
+    min-width: 120px;
+    text-align: right;
+    font-weight: bold;
+    border-right: #b7d2ff solid 1px;
+    align-items: normal;
+}
+
+.post-detail-field {
+    padding: 3px 10px;
+    align-items: normal;
+}
+
+
+
+.post-pagination {
+    border-top: 1px solid #e4f1fe;
+    border-left: none;
+    border-right: none;
+    padding-top: 10px;
+}
+
+.post-pagination div {
+    width: 100%;
+    text-align: right;
+    font-size: 0.8em;
+}
+
+.post-pagination  a {
+    border-radius: 3px;
+    border: 1px solid #e4f1fe;
+    width: 20px;
+    height: 18px;
+    display: inline-block;
+    text-align: center;
+    margin-right: 5px;
+}
+
+.post-pagination select {
+    margin-left: 10px;
+}

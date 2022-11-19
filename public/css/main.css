@@ -1,0 +1,49 @@
+/* ----------- style for page specific content  -----------*/
+.main-heading {
+     color: #22252c;
+     font-family: "Montserrat", Arial, Helvetica, sans-serif;
+     font-weight: 700;
+     font-size: 24px;
+     padding: 10px 0px;
+ }
+
+.sub-heading {
+     font-family: "Montserrat", Arial, Helvetica, sans-serif;
+     background-color: #f8f9fa;
+     font-weight: 600;
+     padding: 10px 0px;
+ }
+
+ .section-content {
+     padding: 20px 0px;
+ }
+
+ .section-content .container {
+     display: flex;
+     flex-direction: column;
+     font-family: "Montserrat", Arial, Helvetica, sans-serif;
+     font-size: 0.9em;
+ }
+
+
+.content-row-header{
+    font-weight: bold;
+    font-size: 14px;
+    border-top: 2px solid #e4f1fe;
+    border-bottom: 1px solid #e4f1fe;
+}
+
+.content-row {
+    width: 100%;
+    min-height: 32px;
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-left: 1px solid #e4f1fe;
+    border-right: 1px solid #e4f1fe;
+}
+
+.content-row-odd {
+    background-color: #f8f9fa;
+}

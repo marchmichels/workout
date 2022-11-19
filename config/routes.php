@@ -11,7 +11,6 @@ use Workout\Authentication\JWTAuthenticator;
 
 
 
-
 $app->get('/', function ($request, $response, $args) {
     return $response->write("Hello, this is the Workout API.");
 });
@@ -74,9 +73,9 @@ $app->group('', function() {
     });
 })
 //->add(new CustomAuthenticatior());
-//->add(new BasicAuthenticator());
+->add(new BasicAuthenticator());
 //->add(new BearerAuthenticator());
-->add(new JWTAuthenticator());
+//->add(new JWTAuthenticator());
 
 
 $app->add(new WorkoutLogging());

@@ -1,0 +1,36 @@
+/*
+*  styles for professor-related elements
+ */
+.user-name {
+    min-width: 200px
+}
+
+.user-email {
+    min-width: 150px
+}
+
+.user-profileicon {
+    min-width: 120px
+}
+
+.user-username {
+    min-width: 100px
+}
+
+.professor-department {
+     min-width: 150px
+ }
+
+.professor-program {
+    min-width: 100px
+}
+
+
+.list-key {
+    color: mediumblue;
+    cursor: pointer;
+}
+
+.list-key:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,72 @@
+/*
+*  styles for student-related elements
+ */
+
+.student-id {
+    width: 100px;
+}
+
+.student-name {
+    width: 200px;
+}
+
+.student-email {
+    width: 150px;
+}
+
+.student-major {
+    width: 250px;
+}
+
+.student-gpa {
+    width: 100px;
+}
+
+.student-id, .student-name, .student-email, .student-major, .student-gpa {
+    margin: 0px 1px;
+    padding: 1px;
+    border: 1px solid #FFFFFF;
+}
+
+/* styles for edit and delete buttons */
+
+div[class^="list-"] {
+    padding: none;
+}
+
+button.btn-light {
+    margin: 0px 2px;
+    width: 75px;
+    border: #4D90C6 solid 1px;
+}
+
+/* styles for the update button */
+button.btn-update {
+    background-color: #d58512;
+}
+/* styles for the cancel button */
+button.btn-cancel{
+    color: #ffffff;
+    background-color: #5e5e5e;
+}
+
+/* styles for editable items */
+.post-editable {
+    border: 1px solid #cccccc;
+    min-height: 22px
+}
+
+/* styles for the add form  */
+.post-add-button-row {
+    background-color: #123E81;
+    color: #FFFFFF;
+}
+
+.post-add-button {
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.post-add-button:hover {
+    text-decoration: underline;
+}
