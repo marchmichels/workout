@@ -1,6 +1,13 @@
 <?php
 
 
+use Workout\Middleware\Logging as WorkoutLogging;
+use Workout\Authentication\CustomAuthenticatior;
+use Workout\Authentication\BasicAuthenticator;
+use Workout\Authentication\BearerAuthenticator;
+use Workout\Authentication\JWTAuthenticator;
+
+
 
 
 
@@ -18,15 +25,19 @@ $app->group('/users', function () {
 
     $this->patch('/{id}', 'UserController:update');
 
+    $this->post('/authBearer', 'UserController:authBearer');
+    $this->post('/authJWT', 'UserController:authJWT');
 
 
 });
 
 
+//post authentication routes
+$app->group('', function() {
 
 
 // Product routes
-    $app->group('/products', function () {
+    $this->group('/products', function () {
         $this->get('', 'ProductController:index');
         $this->get('/{id}', 'ProductController:view');
         $this->get('/{id}/reviews', 'ProductController:viewReviews');
@@ -35,7 +46,7 @@ $app->group('/users', function () {
     });
 
 // Review routes
-    $app->group('/reviews', function () {
+    $this->group('/reviews', function () {
 
         $this->get('/{id}', 'ReviewController:view');
 
@@ -47,7 +58,7 @@ $app->group('/users', function () {
     });
 
 // Order routes
-    $app->group('/orders', function () {
+    $this->group('/orders', function () {
         $this->get('', 'OrderController:index');
         $this->get('/{id}', 'OrderController:view');
 
@@ -55,12 +66,18 @@ $app->group('/users', function () {
     });
 
 // Category routes
-    $app->group('/categories', function () {
+    $this->group('/categories', function () {
         $this->get('', 'CategoryController:index');
         $this->get('/{id}', 'CategoryController:view');
 
 
     });
+})
+//->add(new CustomAuthenticatior());
+//->add(new BasicAuthenticator());
+//->add(new BearerAuthenticator());
+->add(new JWTAuthenticator());
 
 
+$app->add(new WorkoutLogging());
 $app->run();

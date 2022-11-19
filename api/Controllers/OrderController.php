@@ -3,8 +3,6 @@
 namespace Workout\Controllers;
 
 use Workout\Models\Order;
-use Workout\Models\Product;
-use Workout\Models\User;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
@@ -44,7 +42,7 @@ class OrderController {
     }
 
 
-    //get a single order
+        //get a single order
     public function view(Request $request, Response $response, array $args) {
         $id = $args['id'];
         $order = new Order();
