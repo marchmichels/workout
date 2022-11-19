@@ -1,8 +1,11 @@
 <?php
 
 
+use Workout\Middleware\Logging as WorkoutLogging;
 use Workout\Authentication\CustomAuthenticatior;
 use Workout\Authentication\BasicAuthenticator;
+use Workout\Authentication\BearerAuthenticator;
+use Workout\Authentication\JWTAuthenticator;
 
 
 
@@ -22,7 +25,8 @@ $app->group('/users', function () {
 
     $this->patch('/{id}', 'UserController:update');
 
-
+    $this->post('/authBearer', 'UserController:authBearer');
+    $this->post('/authJWT', 'UserController:authJWT');
 
 
 });
@@ -69,9 +73,11 @@ $app->group('', function() {
 
     });
 })
-
-->add(new BasicAuthenticator());
-
 //->add(new CustomAuthenticatior());
+//->add(new BasicAuthenticator());
+//->add(new BearerAuthenticator());
+->add(new JWTAuthenticator());
 
+
+$app->add(new WorkoutLogging());
 $app->run();

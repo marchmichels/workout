@@ -4,11 +4,15 @@
 namespace Workout\Models;
 
 use \Illuminate\Database\Eloquent\Model;
-//use Firebase\JWT\JWT;
-//use Firebase\JWT\Key;
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 class User extends Model
 {
+
+    const JWT_KEY = 'my token';//it can be any token that users like
+    const JWT_EXPIRE = 600;//experiation period in seconds
+
     protected $table = 'users';
     protected $primaryKey = 'user_id';
     public $timestamps = false;
@@ -102,6 +106,7 @@ class User extends Model
     // Authenticate a user by username and password. Return the user.
     public static function authenticateUser($username, $password)
     {
+
         $user = self::where('username', $username)->first();
         if (!$user) {
             return false;
@@ -110,50 +115,50 @@ class User extends Model
     }
 
 
-//    /*
-//    * Generate a JWT token.
-//    * The signature secret rule: the secret must be at least 12 characters
-//    in length;
-//    * contain numbers; upper and lowercase letters; and one of the
-//    following special characters *&!@%^#$.
-//    * For more details, please visit
-//    https://github.com/RobDWaller/ReallySimpleJWT
-//    */
-//    public static function generateJWT($id)
-//    {
-//        // Data for payload
-//        $user = $user = self::findOrFail($id);
-//        if (!$user) {
-//            return false;
-//        }
-//        $key = self::JWT_KEY;
-//        $expiration = time() + self::JWT_EXPIRE;
-//        $issuer = 'mychatter-api.com';
-//        $token = [
-//            'iss' => $issuer,
-//            'exp' => $expiration,
-//            'isa' => time(),
-//            'data' => [
-//                'uid' => $id,
-//                'name' => $user->username,
-//                'email' => $user->email,
-//            ]
-//        ];
-//
-//
-//        // Generate and return a token
-//        return JWT::encode(
-//            $token, // data to be encoded in the JWT
-//            $key, // the signing key
-//            'HS256' // algorithm used to sign the token; defaults to HS256
-//        );
-//    }
-//
-//    // Verify a token
-//    public static function validateJWT($token)
-//    {
-//        $decoded = JWT::decode($token, new Key(self::JWT_KEY, 'HS256'));
-//        return $decoded;
-//    }
-//
+    /*
+    * Generate a JWT token.
+    * The signature secret rule: the secret must be at least 12 characters
+    in length;
+    * contain numbers; upper and lowercase letters; and one of the
+    following special characters *&!@%^#$.
+    * For more details, please visit
+    https://github.com/RobDWaller/ReallySimpleJWT
+    */
+    public static function generateJWT($id)
+    {
+        // Data for payload
+        $user = $user = self::findOrFail($id);
+        if (!$user) {
+            return false;
+        }
+        $key = self::JWT_KEY;
+        $expiration = time() + self::JWT_EXPIRE;
+        $issuer = 'mychatter-api.com';
+        $token = [
+            'iss' => $issuer,
+            'exp' => $expiration,
+            'isa' => time(),
+            'data' => [
+                'uid' => $id,
+                'name' => $user->username,
+                'email' => $user->email,
+            ]
+        ];
+
+
+        // Generate and return a token
+        return JWT::encode(
+            $token, // data to be encoded in the JWT
+            $key, // the signing key
+            'HS256' // algorithm used to sign the token; defaults to HS256
+        );
+    }
+
+    // Verify a token
+    public static function validateJWT($token)
+    {
+        $decoded = JWT::decode($token, new Key(self::JWT_KEY, 'HS256'));
+        return $decoded;
+    }
+
 }

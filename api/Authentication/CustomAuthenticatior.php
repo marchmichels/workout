@@ -1,5 +1,10 @@
 <?php
 
+/* Author: Collin Hill
+Date: 11/12/2022
+Class: CustomAuthenticator
+*/
+
 namespace Workout\Authentication;
 
 

@@ -1,5 +1,10 @@
 <?php
 
+/* Author: Marc Michels
+Date: 11/12/2022
+Class: BasicAuthenticator
+*/
+
 namespace Workout\Authentication;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -12,7 +17,10 @@ class BasicAuthenticator
 
     public function __invoke(Request $request, Response $response, $next)
     {
-        var_dump(getallheaders());
+
+        //die(var_dump($request->getHeaders()));
+
+
         // If the header named "Authorization" does not exist, display an error
         if (!$request->hasHeader('Authorization')) {
 

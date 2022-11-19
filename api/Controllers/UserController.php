@@ -3,6 +3,7 @@
 namespace Workout\Controllers;
 
 use Workout\Models\User;
+use Workout\Models\Token;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
@@ -99,6 +100,64 @@ class UserController {
         ];
         return $response->withJson($results, 200, JSON_PRETTY_PRINT);
 
+    }
+
+
+
+
+
+    // Validate a user with username and password. It returns a Bearer token on success
+    public function authBearer(Request $request, Response $response)
+    {
+
+        $username = $request->getParam('username');
+        $password = $request->getParam('password');
+        $user = User::authenticateUser($username, $password);
+        if ($user) {
+            $status_code = 200;
+
+            //die(var_dump($user->user_id));
+
+            $token = Token::generateBearer($user->user_id);
+            $results = [
+                'status' => 'login successful',
+                'token' => $token
+            ];
+        } else {
+            $status_code = 401;
+            $results = [
+                'status' => 'login failed'
+            ];
+        }
+        return $response->withJson($results, $status_code, JSON_PRETTY_PRINT);
+    }
+
+
+
+    // Validate a user with username and password. It returns a JWT token on success.
+    public function authJWT(Request $request, Response $response)
+    {
+        $params = $request->getParsedBody();
+        $username = $params['username'];
+        $password = $params['password'];
+        $user = User::authenticateUser($username, $password);
+        if ($user) {
+            $status_code = 200;
+            $jwt = User::generateJWT($user->user_id);
+            $results = [
+                'status' => 'login successful',
+                'jwt' => $jwt,
+                'name' => $user->username
+            ];
+        } else {
+            $status_code = 401;
+            $results = [
+                'status' => 'login failed',
+            ];
+        }
+        //return $results;
+        return $response->withJson($results, $status_code,
+            JSON_PRETTY_PRINT);
     }
 
 
