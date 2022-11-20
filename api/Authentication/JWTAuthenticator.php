@@ -1,9 +1,5 @@
 <?php
 
-/* Author: Ramona Tin
-Date: 11/18/2022
-Class: JWTAuthenticator
-*/
 
 namespace Workout\Authentication;
 

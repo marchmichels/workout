@@ -2,6 +2,7 @@
 
 namespace Workout\Controllers;
 
+use Workout\Models\Category;
 use Workout\Models\Product;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -36,8 +37,19 @@ class ProductController {
             $payload_final = [];
 
             foreach ($products as $_pro) {
-                $payload_final[$_pro->product_id] = ['product_name' => $_pro->product_name,
-                    'description' => $_pro->description
+
+                $_categories = Category::searchCategory($_pro->product_id);
+
+                $categories = [];
+                foreach ($_categories as $_category) {
+                    $categories[] = $_category->category_name;
+                }
+
+                $payload_final[$_pro->product_id] = [
+                    'product_name' => $_pro->product_name,
+                    'description' => $_pro->description,
+                    'price' => $_pro->price,
+                    'categories' => $categories
                 ];
             }
         }

@@ -22,6 +22,8 @@ $app->group('/users', function () {
     $this->get('', 'UserController:index');
     $this->get('/{id}', 'UserController:view');
 
+    $this->post('', 'UserController:create');
+
     $this->patch('/{id}', 'UserController:update');
 
     $this->post('/authBearer', 'UserController:authBearer');
@@ -73,9 +75,9 @@ $app->group('', function() {
     });
 })
 //->add(new CustomAuthenticatior());
-->add(new BasicAuthenticator());
+//->add(new BasicAuthenticator());
 //->add(new BearerAuthenticator());
-//->add(new JWTAuthenticator());
+->add(new JWTAuthenticator());
 
 
 $app->add(new WorkoutLogging());

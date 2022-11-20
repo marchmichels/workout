@@ -1,5 +1,5 @@
 var oldHash = '';
-var baseUrl_API = ""; // you need to fill this variable with your own api url
+var baseUrl_API = "http://localhost:8000/api"; // you need to fill this variable with your own api url
 
 $(function () {
     //Handle hashchange event; when a click is clicked, invoke an appropriate function
@@ -21,14 +21,8 @@ $(function () {
             case 'home':
                 home();
                 break;
-            case 'user':
-                showUsers();
-                break;
-            case 'post':
-                showPosts();
-                break;
-            case 'admin':
-                showAllPosts();
+            case 'products':
+                showProducts();
                 break;
             case 'signin':
                 signin();
@@ -55,26 +49,14 @@ $(function () {
 // This function sets the content of the homepage.
 function home() {
     let _html =
-        `<p>This application demonstrates a responsive <strong>Single Page Application (SPA)</strong> architecture. SPAs are for an improved user experience.
-        A SPA avoids interruption of the user experience between successive pages, making the application behave more like a 
-        desktop application.</p>
+        `<p>Kettlebell fitness is the place for all your nutritional needs.</p>
         
-        <p>The entire application consists of two pages: the sign in /sign up page and the main page for displaying section data.
-        This application is an API client. Data of the application is provided by a API service called <strong>MyChatter API</strong>. 
-        The application uses four common HTTP methods for CRUD operations: <strong>GET, POST, PUT, and DELETE</strong>.</p>
         
-        <p>This application uses three different approaches for requesting API data:</p>
-        <ul>
-        <li><a href="https://en.wikipedia.org/wiki/Ajax_(programming)" target="_blank">AJAX</a> </li>
-        <li><a href="https://github.com/axios/axios" target="_blank">Axios</a></li>
-        <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch" target="_blank">Fetch</a></li>
-        </ul>
-        
-        <p>For quick web development, <a href="https://jquery.com/" target="_blank">jQuery</a> and <a href="https://getbootstrap.com/" target="_blank">Bootstrap</a> are used.</p>
+
         <p>Please click on the "Sign in" link to sign in and explore the site. If you don't already have an account, please sign up and create a new account.</p>`;
 
     // Update the section heading, sub heading, and content
-    updateMain('Home', 'Welcome to MyChatter Application', _html);
+    updateMain('Home', 'Welcome to Kettlebell Fitness', _html);
 }
 
 // This function updates main section content.

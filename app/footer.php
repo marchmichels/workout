@@ -1,9 +1,6 @@
 <?php
 /**
- * Author: Ran Chang
- * Date: 8/18/2019
- * File: footer.php
- * Description:
+ *
  */
 ?>
 
@@ -11,7 +8,10 @@
 <!--   Begin footer -------------->
 <footer class="footer mt-auto py-3">
     <div class="container">
-        <span class="text-muted">&copy;MyChatter Co. 2018-2019</span>
+        <span class="text-muted">&copy; 2022 Kettlebell Fitness</span>
+    </div>
+    <div class="container">
+        <span class="text-muted">INFO-I425 Group 1</span>
     </div>
 </footer>
 <!--<div id="loading" class="loading">
@@ -26,12 +26,10 @@
 <script src="js/lib/bootstrap-4.3.1.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-<script src="js/lib/axios.min.js"></script>
 
 
-<script src="js/user.js"></script>
-<script src="js/post.js"></script>
-<script src="js/admin.js"></script>
+
+<script src="js/product.js"></script>
 <script src="js/signin.js"></script>
 <script src="js/signup.js"></script>
 <script src="js/signout.js"></script>

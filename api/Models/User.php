@@ -73,6 +73,32 @@ class User extends Model
 
     }
 
+    //create a user
+    public static function createUser($request)
+    {
+        // Retrieve parameters from request body
+        $params = $request->getParsedBody();
+
+        // Create a new User instance
+        $user = new User();
+
+
+        //set entity properties
+        $user->username = $params['username'];
+        $user->password = password_hash($params['password'], PASSWORD_DEFAULT);
+        $user->first_name = $params['first_name'];
+        $user->last_name = $params['last_name'];
+        $user->street_address = $params['street_address'];
+        $user->city = $params['city'];
+        $user->state = $params['state'];
+        $user->zipcode = $params['zipcode'];
+
+
+        // Insert the user into the database
+        $user->save();
+        return $user;
+    }
+
     // Update a user
     public static function updateUser($request)
     {
@@ -115,14 +141,11 @@ class User extends Model
     }
 
 
-    /*
+    /* RAMONA EDIT
     * Generate a JWT token.
-    * The signature secret rule: the secret must be at least 12 characters
-    in length;
+    * The signature secret rule: the secret must be at least 12 characters in length;
     * contain numbers; upper and lowercase letters; and one of the
     following special characters *&!@%^#$.
-    * For more details, please visit
-    https://github.com/RobDWaller/ReallySimpleJWT
     */
     public static function generateJWT($id)
     {

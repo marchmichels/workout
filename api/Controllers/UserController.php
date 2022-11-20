@@ -6,6 +6,7 @@ use Workout\Models\User;
 use Workout\Models\Token;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+use Workout\Validations\Validator;
 
 
 class UserController {
@@ -87,6 +88,61 @@ class UserController {
         ];
 
         return $response->withStatus(200)->withJson($payload);
+
+    }
+
+    //create a review
+    public function create(Request $request, Response $response, array $args) {
+
+        //validate new user
+        $validation = Validator::validateUser($request);
+
+
+        // If validation failed
+        if (!$validation) {
+            $results = [
+                'status' => "Validation failed",
+                'errors' => Validator::getErrors()
+            ];
+            return $response->withJson($results, 500, JSON_PRETTY_PRINT);
+        }
+        // Validation has passed; Proceed to create the user
+        $user = User::createUser($request);
+        $results = [
+            'status' => 'user created',
+            'data' => $user
+        ];
+        return $response->withJson($results, 201, JSON_PRETTY_PRINT);
+
+
+
+//        $user = new User();
+//
+//        $_username = $request->getParam('username');
+//        $_password = $request->getParam('password');
+//        $_first_name = $request->getParam('first_name');
+//        $_last_name = $request->getParam('last_name');
+//        $_street_address = $request->getParam('street_address');
+//        $_city = $request->getParam('city');
+//        $_state = $request->getParam('state');
+//        $_zipcode = $request->getParam('zipcode');
+//
+//        $user->username = $_username;
+//        $user->password = $_password;
+//        $user->first_name = $_first_name;
+//        $user->last_name = $_last_name;
+//        $user->street_address = $_street_address;
+//        $user->city = $_city;
+//        $user->state = $_state;
+//        $user->zipcode = $_zipcode;
+//
+//        $user->save();
+//
+//        $payload = (['status'=> 'user created',
+//            'data' => $user
+//        ]);
+//
+//        return $response->withStatus(201)->withJson($payload);
 
     }
 

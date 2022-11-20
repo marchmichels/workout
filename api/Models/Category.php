@@ -15,5 +15,13 @@ class Category extends Model
         return $this->belongsTo(Product::class, 'product_id');
     }
 
+    public static function searchCategory($product_id)
+    {
+
+        $query = self::where('product_id', "like", "$product_id");
+        $results = $query->get();
+        return $results;
+    }
+
 
 }

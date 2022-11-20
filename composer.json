@@ -2,7 +2,8 @@
     "require": {
         "slim/slim": "3.0",
         "illuminate/database": "~5.2",
-        "firebase/php-jwt": "^6.3"
+        "firebase/php-jwt": "^6.3",
+        "respect/validation": "^2.2"
     },
     "autoload": {
         "psr-4": {

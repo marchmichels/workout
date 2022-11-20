@@ -9,8 +9,8 @@ function signout() {
         //Update the main section content
         updateMain('Signing out', 'Confirmation', 'You are now signed out. Thank you for visiting.');
 
-        // Disable the professor, course, and student links in the nav bar
-        $("li#li-professor > a, li#li-post > a, li#li-admin > a").addClass('nav-link disabled');
+
+
 
         // Show the sign-in link and hide the sign-out link
         $("li#li-signin").show();

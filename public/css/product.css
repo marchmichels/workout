@@ -1,27 +1,19 @@
 /*
 *  styles for professor-related elements
  */
-.user-name {
+.product-name {
     min-width: 200px
 }
 
-.user-email {
-    min-width: 150px
-}
-
-.user-profileicon {
-    min-width: 120px
-}
-
-.user-username {
+.product-price {
     min-width: 100px
 }
 
-.professor-department {
-     min-width: 150px
- }
+.product-description {
+    min-width: 200px
+}
 
-.professor-program {
+.product-category {
     min-width: 100px
 }
 

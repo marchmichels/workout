@@ -27,19 +27,4 @@ body {
 code {
     font-size: 80%;
 }
-/*
 
-.loading {
-    display: none;
-    position: absolute;
-    left: 50%;
-    -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
-    margin-top: 120px;
-    text-align: center;
-    padding: 40px 20px;
-    width: 300px;
-    border: 1px solid #666;
-    box-shadow: 4px 4px 16px 2px #999;
-    background-color: #fff;
-}*/
