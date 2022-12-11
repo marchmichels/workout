@@ -1,0 +1,29 @@
+/*
+*  styles for class-related elements
+ */
+
+.post_preview {
+    font-size: 0.9em;
+}
+.post_preview th {
+    background-color: #eeeeee;
+}
+.post_preview td, .post_preview th {
+    padding: 5px 2px;
+}
+
+.post_preview-body {
+    min-width: 200px
+}
+
+.post_preview-image {
+    min-width: 50px
+}
+
+.post_preview-create {
+    min-width: 100px
+}
+
+.post_preview-update {
+    min-width: 100px
+}

@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="css/index.css" >
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/product.css">
+    <link rel="stylesheet" href="css/admin.css">
     <link rel="stylesheet" href="css/signin.css">
     <title>Kettlebell Fitness</title>
 
@@ -37,11 +38,11 @@
             <div class="navbar-collapse collapse" id="navbarCollapse" style="">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item" id="li-user">
-                        <a class="nav-link disabled" href="#products">Products <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="#products">Products <span class="sr-only">(current)</span></a>
                     </li>
-
-
-
+                    <li class="nav-item" id="li-admin">
+                        <a class="nav-link disabled" href="#admin">Admin</a>
+                    </li>
                     <li class="nav-item" id="li-signin">
                         <a class="nav-link" href="#signin">Sign in</a>
                     </li>

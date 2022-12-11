@@ -30,6 +30,7 @@
 
 
 <script src="js/product.js"></script>
+<script src="js/admin.js"></script>
 <script src="js/signin.js"></script>
 <script src="js/signup.js"></script>
 <script src="js/signout.js"></script>

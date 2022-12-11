@@ -24,6 +24,9 @@ $(function () {
             case 'products':
                 showProducts();
                 break;
+            case 'admin':
+                showAllProducts();
+                break;
             case 'signin':
                 signin();
                 break;

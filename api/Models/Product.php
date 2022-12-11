@@ -4,6 +4,7 @@
 namespace Workout\Models;
 
 use \Illuminate\Database\Eloquent\Model;
+use Workout\Models\Category;
 
 class Product extends Model
 {

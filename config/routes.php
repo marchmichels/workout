@@ -32,6 +32,8 @@ $app->group('/users', function () {
 
 });
 
+$app->get('/products', 'ProductController:index');
+
 
 //post authentication routes
 $app->group('', function() {
@@ -39,9 +41,19 @@ $app->group('', function() {
 
 // Product routes
     $this->group('/products', function () {
-        $this->get('', 'ProductController:index');
+        //$this->get('', 'ProductController:index');
         $this->get('/{id}', 'ProductController:view');
         $this->get('/{id}/reviews', 'ProductController:viewReviews');
+
+        //create
+        $this->post('', 'ProductController:create');
+
+        //update
+        $this->patch('/{id}', 'ProductController:update');
+
+        //delete
+        $this->delete('/{id}', 'ProductController:delete');
+
 
 
     });

@@ -46,6 +46,7 @@ class ProductController {
                 }
 
                 $payload_final[$_pro->product_id] = [
+                    'product_id' => $_pro->product_id,
                     'product_name' => $_pro->product_name,
                     'description' => $_pro->description,
                     'price' => $_pro->price,
@@ -77,8 +78,106 @@ class ProductController {
 
     }
 
+    //create a product
+    public function create(Request $request, Response $response, array $args)
+    {
+        //create a new product
+        $product = new Product();
+        $_name = $request->getParam('product_name');
+        $_price = $request->getParam('price');
+        $_description = $request->getParam('description');
 
-    //get all reviews for a product
+        //set new product values
+        $product->product_name = $_name;
+        $product->price = $_price;
+        $product->description = $_description;
+        $product->save();
+
+        //create a new category
+        $category = new Category();
+        $_product_id = $product->product_id;
+        $_category = $request->getParam('category');
+
+        //set new category values
+        $category->product_id = $_product_id;
+        $category->category_name = $_category;
+        $category->save();
+
+
+
+
+
+
+        $payload = (['status'=> "product $_product_id created."
+        ]);
+
+        return $response->withStatus(201)->withJson($payload);
+
+    }
+
+    //update a product
+    public function update(Request $request, Response $response, array $args) {
+
+        $product = new Product();
+        //the product to update
+        $_pro = $product->findOrFail($args['id']);
+
+
+        $_name = $request->getParam('product_name');
+        $_price = $request->getParam('price');
+        $_description = $request->getParam('description');
+
+        //set new product values
+        $_pro->product_name = $_name;
+        $_pro->price = $_price;
+        $_pro->description = $_description;
+        $_pro->save();
+
+        //find a category
+        $_cat = new Category();
+        $_category = $_cat::searchCategory($args['id']);
+        $_new_category = $request->getParam('category');
+        $_category[0]->category_name = $_new_category;
+        $_category[0]->save();
+
+
+
+
+
+
+        $payload = (['status'=> "product $_pro->product_id updated."
+        ]);
+
+        return $response->withStatus(201)->withJson($payload);
+
+
+    }
+
+    //delete a product
+    public function delete(Request $request, Response $response, array $args) {
+
+        $id = $args['id'];
+        $product = Product::find($id);
+
+        $_cat = new Category();
+        $_category = $_cat::searchCategory($args['id']);
+        $cat_id = $_category[0]->category_id;
+        $category = Category::find($cat_id);
+
+        $product->delete();
+        $category->delete();
+        if($product->exists || $category->exists) {
+            return $response->withStatus(500);
+        } else {
+            return $response->withStatus(204)->getBody()->write("Product'/products/$id' has been deleted.");
+        }
+
+
+
+    }
+
+
+        //get all reviews for a product
     //view reviews
     public function viewReviews(Request $request, Response $response, array $args) {
         $id = $args['id'];

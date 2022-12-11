@@ -5,6 +5,7 @@ var jwt = '';   //JSON Web token
 function signin() {
     $('.img-loading, main, .form-signup, #li-signout, #li-signup').hide();
     $('.form-signin, #li-signin').show();
+    $("li#li-professor > a, li#li-course > a, li#li-student > a").addClass('disabled');
 
 }
 
