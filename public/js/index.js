@@ -24,6 +24,9 @@ $(function () {
             case 'products':
                 showProducts();
                 break;
+            case 'users':
+                showUsers();
+                break;
             case 'admin':
                 showAllProducts();
                 break;
@@ -56,7 +59,49 @@ function home() {
         
         
 
-        <p>Please click on the "Sign in" link to sign in and explore the site. If you don't already have an account, please sign up and create a new account.</p>`;
+        <p>Please click on the "Sign in" link to sign in and explore the site. If you don't already have an account, please sign up and create a new account.</p>
+
+
+
+
+<div id="demo" class="carousel slide" data-ride="carousel">
+
+  <!-- Indicators -->
+  <ul class="carousel-indicators">
+    <li data-target="#demo" data-slide-to="0" class="active"></li>
+    <li data-target="#demo" data-slide-to="1"></li>
+    <li data-target="#demo" data-slide-to="2"></li>
+  </ul>
+  
+  <!-- The slideshow -->
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="./img/home1.jpg" alt="Home1" >
+    </div>
+    <div class="carousel-item">
+      <img src="./img/home2.jpg" alt="Home2" >
+    </div>
+    <div class="carousel-item">
+      <img src="./img/home3.png" alt="Home3" >
+    </div>
+  </div>
+  
+  <!-- Left and right controls -->
+  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </a>
+  <a class="carousel-control-next" href="#demo" data-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </a>
+</div>
+
+
+
+
+
+
+
+`;
 
     // Update the section heading, sub heading, and content
     updateMain('Home', 'Welcome to Kettlebell Fitness', _html);

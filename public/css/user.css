@@ -2,10 +2,10 @@
 *  styles for professor-related elements
  */
 .user-name {
-    min-width: 200px
+    min-width: 100px
 }
 
-.user-email {
+.user-street {
     min-width: 150px
 }
 

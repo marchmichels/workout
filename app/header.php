@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="css/index.css" >
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/product.css">
+    <link rel="stylesheet" href="css/product_preview.css">
+    <link rel="stylesheet" href="css/user.css">
     <link rel="stylesheet" href="css/admin.css">
     <link rel="stylesheet" href="css/signin.css">
     <title>Kettlebell Fitness</title>
@@ -42,6 +44,9 @@
                     </li>
                     <li class="nav-item" id="li-admin">
                         <a class="nav-link disabled" href="#admin">Admin</a>
+                    </li>
+                    <li class="nav-item" id="li-admin">
+                        <a class="nav-link disabled" href="#users">Users</a>
                     </li>
                     <li class="nav-item" id="li-signin">
                         <a class="nav-link" href="#signin">Sign in</a>

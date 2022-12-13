@@ -28,6 +28,14 @@ class User extends Model
         return $this->hasMany(Order::class, 'user_id');
     }
 
+    //get all users
+    public static function getUsers()
+    {
+        //all() methdod only retrieves the comments.
+        $users = self::all();
+        return $users;
+    }
+
     public static function getLinks($request, $limit, $offset)
     {
         $count = self::count();
@@ -123,6 +131,13 @@ class User extends Model
         // save user update
         $user->save();
         return $user;
+    }
+
+    //get all orders for a user
+    public static function getOrdersByUser($id)
+    {
+        $orders = self::findOrFail($id)->orders;
+        return $orders;
     }
 
 

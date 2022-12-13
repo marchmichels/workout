@@ -26,6 +26,8 @@ $app->group('/users', function () {
 
     $this->patch('/{id}', 'UserController:update');
 
+    $this->get('/{id}/orders', 'UserController:viewOrders');
+
     $this->post('/authBearer', 'UserController:authBearer');
     $this->post('/authJWT', 'UserController:authJWT');
 

@@ -43,3 +43,9 @@ code {
     box-shadow: 4px 4px 16px 2px #999;
     background-color: #fff;
 }*/
+
+
+
+.carousel-inner img {
+    height: 100%;
+}

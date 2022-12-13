@@ -13,11 +13,11 @@
 }
 
 .post_preview-body {
-    min-width: 200px
+    min-width: 100px
 }
 
 .post_preview-image {
-    min-width: 50px
+    min-width: 100px
 }
 
 .post_preview-create {

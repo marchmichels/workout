@@ -4,7 +4,7 @@
 
 
 .product-id{
-    width: 130px
+    width: 100px
 }
 
 .product-name {
@@ -20,6 +20,9 @@
 }
 
 .product-description {
+    width: 300px
+}
+.product-url {
     width: 300px
 }
 
@@ -79,4 +82,9 @@
 
 .product-pagination select {
     margin-left: 10px;
+}
+
+img {
+    width: 50px;
+    height: 50px;
 }

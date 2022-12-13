@@ -11,7 +11,7 @@ function showAllProducts() {
     })
         .then(checkFetch)
         .then(response => response.json())
-        .then(products => displayAllProducts(products))
+        .then(products => displayAllProducts(products.data))
         .catch(err => showMessage("Errors", err)) //display errors
 }
 
@@ -20,28 +20,35 @@ function showAllProducts() {
 // The first parameter is an array of messages and second parameter is the subheading, defaults to null.
 function displayAllProducts(products, subheading=null) {
     console.log("display all products for the editing purpose")
+    console.log(products);
+
+
 
     // search box and the row of headings
     let _html = `<div style='text-align: right; margin-bottom: 3px'>
-<!--            <input id='search-term' placeholder='Enter search terms'> -->
-<!--            <button id='btn-post-search' onclick='searchProducts()'>Search</button></div>-->
+            <input id='search-term' placeholder='Enter search terms'> 
+            <button id='btn-product-search' onclick='searchProducts()'>Search</button></div>
             <div class='content-row content-row-header'>
             <div class='product-id'>Product ID</div>
             <div class='product-name'>Product Name</div>
             <div class='product-category'>Category</div>
             <div class='product-price'>Price</div>
             <div class='product-description'>Description</div>
+            <div class='product-url'>Image URL</div>
             </div>`;  //end the row
 
     // content rows
     for (let x in products) {
         let product = products[x];
+        //console.log(product)
         _html += `<div class='content-row'>
             <div class='product-id'>${product.product_id}</div>
             <div class='product-name' id='product-edit-name-${product.product_id}'>${product.product_name}</div> 
-            <div class='product-category' id='product-edit-category-${product.product_id}'>${product.categories}</div>
+            <div class='product-category' id='product-edit-category-${product.product_id}'>${product.categories[0].category_name}</div>
             <div class='product-price' id='product-edit-price-${product.product_id}'>${product.price}</div> 
-            <div class='product-description' id='product-edit-description-${product.product_id}'>${product.description}</div>`;
+            <div class='product-description' id='product-edit-description-${product.product_id}'>${product.description}</div>
+            <div class='product-url' id='product-edit-url-${product.product_id}'>${product.image_url}</div>`;
+
 
         _html += `<div class='list-edit'><button id='btn-product-edit-${product.product_id}' onclick=editProduct('${product.product_id}') class='btn-light'> Edit </button></div>
             <div class='list-update'><button id='btn-product-update-${product.product_id}' onclick=updateProduct('${product.product_id}') class='btn-light btn-update' style='display:none'> Update </button></div>
@@ -63,6 +70,8 @@ function displayAllProducts(products, subheading=null) {
             <div class='product-category'><strong>Category</strong></div>
             <div class='product-price'><strong>Price</strong></div> 
             <div class='product-description'><strong>Description</strong></div>
+            <div class='product-description'><strong>Image URL</strong></div>
+
             </div>
 
 
@@ -73,6 +82,7 @@ function displayAllProducts(products, subheading=null) {
             <div class='product-category product-editable' id='product-new-category' contenteditable='true'></div>
             <div class='product-price product-editable' id='product-new-price' contenteditable='true'></div>
             <div class='product-description product-editable' id='product-new-description' contenteditable='true'></div>
+            <div class='product-description product-editable' id='product-new-url' contenteditable='true'></div>
             <div class='list-update'><button id='btn-add-product-insert' onclick='addProduct()' class='btn-light btn-update'> Insert </button></div>
             <div class='list-cancel'><button id='btn-add-product-cancel' onclick='cancelAddProduct()' class='btn-light btn-cancel'>Cancel</button></div>
             </div>`;  //end the row
@@ -88,29 +98,29 @@ function displayAllProducts(products, subheading=null) {
 // /***********************************************************************************************************
 //  ******                            Search Products                                                    ******
 //  **********************************************************************************************************/
-// function searchPosts() {
-//     let term = $("#search-term").val();
-//     //console.log(term);
-//     const url = baseUrl_API + "/messages?q=" + term;
-//     let subheading = '';
-//     //console.log(url);
-//     if (term == '') {
-//         subheading = "All Messages";
-//     } else if (isNaN(term)) {
-//         subheading = "Messages Containing '" + term + "'"
-//     } else {
-//         subheading = "Messages whose ID is having" + term;
-//     }
-// //send the request
-//     fetch(url, {
-//         method: 'GET',
-//         headers: {"Authorization": "Bearer " + jwt}
-//     })
-//         .then(checkFetch)
-//         .then(response => response.json())
-//         .then(posts => displayAllPosts(posts))
-//         .catch(err => showMessage("Errors", err)) //display errors
-// }
+function searchProducts() {
+    let term = $("#search-term").val();
+    //console.log(term);
+    const url = baseUrl_API + "/products?q=" + term;
+    let subheading = '';
+    console.log(url);
+    if (term == '') {
+        subheading = "All Products";
+    } else if (isNaN(term)) {
+        subheading = "Products Containing '" + term + "'"
+    } else {
+        subheading = "Products whose ID is having" + term;
+    }
+//send the request
+    fetch(url, {
+        method: 'GET',
+        headers: {"Authorization": "Bearer " + jwt}
+    })
+        .then(checkFetch)
+        .then(response => response.json())
+        .then(products => displayAllProducts(products.data))
+        .catch(err => showMessage("Errors", err)) //display errors
+}
 
 
 /***********************************************************************************************************
@@ -131,6 +141,8 @@ function editProduct(id) {
     $("div#product-edit-category-" + id).attr('contenteditable', true).addClass('product-editable');
     $("div#product-edit-price-" + id).attr('contenteditable', true).addClass('product-editable');
     $("div#product-edit-description-" + id).attr('contenteditable', true).addClass('product-editable');
+    $("div#product-edit-url-" + id).attr('contenteditable', true).addClass('product-editable');
+
 
     $("button#btn-product-edit-" + id + ", button#btn-product-delete-" + id).hide();
     $("button#btn-product-update-" + id + ", button#btn-product-cancel-" + id).show();
@@ -144,6 +156,8 @@ function updateProduct(id) {
     data['category'] = $("div#product-edit-category-" + id).html();
     data['price'] = $("div#product-edit-price-" + id).html();
     data['description'] = $("div#product-edit-description-" + id).html();
+    data['url'] = $("div#product-edit-url-" + id).html();
+
     console.log(data);
     const url = baseUrl_API + "/products/" + id;
     console.log(url);
